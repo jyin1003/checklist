@@ -5,6 +5,8 @@ import { isScheduledToday, todayDateString } from '@/lib/recurrence';
 import type { TodayList } from '@/lib/types';
 import TodayListCard from '@/components/TodayListCard';
 
+export const dynamic = 'force-dynamic';
+
 async function getTodaysLists(): Promise<TodayList[]> {
     const today = todayDateString();
 
