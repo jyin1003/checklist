@@ -16,6 +16,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Checklist",
   description: "Recurring checklists",
+  appleWebApp: {
+    capable: true,
+    title: 'Checklist',
+    statusBarStyle: 'default',
+  },
 };
 
 export default function RootLayout({
