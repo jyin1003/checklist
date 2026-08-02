@@ -8,37 +8,54 @@ import TodayListCard from '@/components/TodayListCard';
 export const dynamic = 'force-dynamic';
 
 async function getTodaysLists(): Promise<TodayList[]> {
-    const today = todayDateString();
+    try {
 
-    const activeSchedules = await db.query.schedules.findMany({
-        where: eq(schedules.active, true),
-        with: {
-            list: {
-                with: {
-                    items: { orderBy: (item, { asc }) => [asc(item.position)] },
+        const today = todayDateString();
+
+        const activeSchedules = await db.query.schedules.findMany({
+            where: eq(schedules.active, true),
+            with: {
+                list: {
+                    with: {
+                        items: { orderBy: (item, { asc }) => [asc(item.position)] },
+                    },
                 },
             },
-        },
-    });
+        });
 
-    const due = activeSchedules.filter((s) => isScheduledToday(s, today));
-    if (due.length === 0) return [];
+        const due = activeSchedules.filter((s) => isScheduledToday(s, today));
+        if (due.length === 0) return [];
 
-    const todaysCompletions = await db.query.listCompletions.findMany({
-        where: eq(listCompletions.date, today),
-    });
-    const checkedItemIds = new Set(
-        todaysCompletions.filter((c) => c.checked).map((c) => c.itemId)
-    );
+        const todaysCompletions = await db.query.listCompletions.findMany({
+            where: eq(listCompletions.date, today),
+        });
+        const checkedItemIds = new Set(
+            todaysCompletions.filter((c) => c.checked).map((c) => c.itemId)
+        );
 
-    return due.map((schedule) => ({
-        ...schedule.list,
-        scheduleId: schedule.id,
-        items: schedule.list.items.map((item) => ({
-            ...item,
-            checked: checkedItemIds.has(item.id),
-        })),
-    }));
+
+        return due.map((schedule) => ({
+            ...schedule.list,
+            scheduleId: schedule.id,
+            items: schedule.list.items.map((item) => ({
+                ...item,
+                checked: checkedItemIds.has(item.id),
+            })),
+        }));
+    } catch (error: unknown) {
+        console.error("SCHEDULE_QUERY_ERROR", error);
+
+        if (error instanceof Error) {
+            console.error("SCHEDULE_QUERY_ERROR_DETAILS", {
+                name: error.name,
+                message: error.message,
+                stack: error.stack,
+                cause: error.cause,
+            });
+        }
+
+        throw error;
+    }
 }
 
 export default async function TodayPage() {
