@@ -16,10 +16,15 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Checklist",
   description: "Recurring checklists",
+  manifest: '/manifest.webmanifest',
   appleWebApp: {
     capable: true,
     title: 'Checklist',
     statusBarStyle: 'default',
+  },
+  icons: {
+    apple: '/logo.svg',
+    icon: '/logo.svg',
   },
 };
 

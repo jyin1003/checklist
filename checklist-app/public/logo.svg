@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" fill="none">
+  <!-- Transparent outer canvas; rounded-square app background included as a shape -->
+  <rect x="32" y="32" width="960" height="960" rx="220" fill="#0a0a0d"/>
+
+  <g stroke="#8b5cf6" stroke-width="54" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <rect x="250" y="170" width="524" height="684" rx="92"/>
+
+    <path d="M344 350 L386 392 L452 318"/>
+    <path d="M510 354 H674"/>
+
+    <path d="M344 512 L386 554 L452 480"/>
+    <path d="M510 516 H674"/>
+
+    <path d="M344 674 L386 716 L452 642"/>
+    <path d="M510 678 H674"/>
+  </g>
+</svg>

@@ -29,8 +29,13 @@ export default function SchedulePage() {
 
     return (
         <div className="flex-1 overflow-y-auto p-4 pb-8 relative">
-            <h1 className="text-2xl font-semibold mb-5 font-mono tracking-tight">
-                <span className="text-accent">...</span> Manage
+            <h1 className="mb-5 flex items-center gap-3 font-mono text-2xl font-semibold tracking-tight">
+                <img
+                    src="/logo.svg"
+                    alt="Pocket Prayer"
+                    className="h-10 w-10"
+                />
+                <span>Manage</span>
             </h1>
 
             <input
