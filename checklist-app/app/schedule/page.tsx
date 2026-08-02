@@ -28,20 +28,22 @@ export default function SchedulePage() {
     }, [query, refresh]);
 
     return (
-        <div className="flex-1 overflow-y-auto p-4 pb-24 relative">
-            <h1 className="text-2xl font-semibold mb-4">Manage lists</h1>
+        <div className="flex-1 overflow-y-auto p-4 pb-8 relative">
+            <h1 className="text-2xl font-semibold mb-5 font-mono tracking-tight">
+                <span className="text-accent">...</span> Manage
+            </h1>
 
             <input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search lists..."
-                className="w-full border border-zinc-300 rounded-lg px-3 py-2 mb-4"
+                className="w-full bg-surface border border-border rounded-xl px-4 py-3 mb-5 text-[15px] placeholder:text-muted"
             />
 
             {loading ? (
-                <p className="text-zinc-400 text-sm">Loading...</p>
+                <p className="text-muted text-sm font-mono">loading…</p>
             ) : lists.length === 0 ? (
-                <p className="text-zinc-500 mt-8 text-center">No lists yet.</p>
+                <p className="text-muted mt-16 text-center text-sm font-mono">no lists yet</p>
             ) : (
                 <div className="flex flex-col gap-3">
                     {lists.map((list) => (
@@ -58,7 +60,7 @@ export default function SchedulePage() {
             <button
                 onClick={() => setEditingList(null)}
                 aria-label="Add list"
-                className="fixed bottom-24 right-6 w-14 h-14 rounded-full bg-black text-white text-2xl shadow-lg flex items-center justify-center"
+                className="fixed bottom-24 right-5 w-16 h-16 rounded-full bg-accent text-white text-3xl shadow-lg glow-accent flex items-center justify-center"
             >
                 +
             </button>

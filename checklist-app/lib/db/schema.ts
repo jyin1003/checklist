@@ -15,7 +15,7 @@ export const listItems = pgTable('list_items', {
 export const schedules = pgTable('schedules', {
     id: uuid('id').defaultRandom().primaryKey(),
     listId: uuid('list_id').references(() => lists.id, { onDelete: 'cascade' }).notNull(),
-    type: text('type').notNull(), // 'once' | 'daily' | 'weekly' | 'monthly' | 'today' | 'tomorrow'
+    type: text('type').notNull(), // 'daily' | 'weekly' | 'monthly' | 'today' | 'tomorrow'
     startDate: date('start_date').notNull(),
     interval: integer('interval').default(1),
     daysOfWeek: integer('days_of_week').array(), // e.g. [1,3,5]

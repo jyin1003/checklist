@@ -12,17 +12,20 @@ export default function BottomNav() {
     const pathname = usePathname();
 
     return (
-        <nav className="border-t border-zinc-200 bg-white flex">
+        <nav className="sticky bottom-0 border-t border-border bg-surface/95 backdrop-blur flex pb-[env(safe-area-inset-bottom)]">
             {tabs.map((tab) => {
                 const active = pathname.startsWith(tab.href);
                 return (
                     <Link
                         key={tab.href}
                         href={tab.href}
-                        className={`flex-1 text-center py-3 text-sm font-medium ${active ? 'text-black' : 'text-zinc-400'
-                            }`}
+                        className="relative flex-1 flex flex-col items-center justify-center gap-1 min-h-16 text-sm font-mono uppercase tracking-wide transition-colors"
                     >
-                        {tab.label}
+                        <span
+                            className={`absolute top-0 h-0.5 w-10 rounded-full transition-all ${active ? 'bg-accent shadow-[0_0_10px_var(--accent)]' : 'bg-transparent'
+                                }`}
+                        />
+                        <span className={active ? 'text-accent-hover' : 'text-muted'}>{tab.label}</span>
                     </Link>
                 );
             })}

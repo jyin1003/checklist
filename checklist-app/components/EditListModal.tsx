@@ -89,15 +89,15 @@ export default function EditListModal({
     }
 
     return (
-        <div className="fixed inset-0 bg-black/40 flex items-end sm:items-center justify-center z-50">
-            <div className="bg-white rounded-t-2xl sm:rounded-2xl w-full sm:max-w-md p-5 max-h-[85vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center z-50">
+            <div className="bg-surface border border-border rounded-t-2xl sm:rounded-2xl w-full sm:max-w-md p-5 max-h-[85vh] overflow-y-auto">
                 <div className="flex items-center justify-between mb-4">
                     <h2 className="text-lg font-semibold">{list ? 'Edit list' : 'New list'}</h2>
                     <button
                         type="button"
                         onClick={onClose}
                         aria-label="Close"
-                        className="p-1.5 -mr-1.5 rounded-full text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600 text-xl leading-none"
+                        className="w-10 h-10 -mr-2 flex items-center justify-center rounded-full text-muted active:bg-surface-2 text-xl leading-none"
                     >
                         ✕
                     </button>
@@ -108,24 +108,24 @@ export default function EditListModal({
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="List name"
-                        className="border border-zinc-300 rounded-lg px-3 py-2"
+                        className="bg-surface-2 border border-border rounded-xl px-4 py-3 text-[15px] placeholder:text-muted"
                         autoFocus
                     />
 
                     <div className="flex flex-col gap-2">
                         {rows.map((row) => (
-                            <div key={row.key} className="flex items-center gap-2">
+                            <div key={row.key} className="flex items-center gap-1">
                                 <input
                                     value={row.content}
                                     onChange={(e) => updateRow(row.key, e.target.value)}
                                     placeholder="Item"
-                                    className="flex-1 border border-zinc-300 rounded-lg px-3 py-2"
+                                    className="flex-1 bg-surface-2 border border-border rounded-xl px-4 py-3 text-[15px] placeholder:text-muted"
                                 />
                                 <button
                                     type="button"
                                     onClick={() => removeRow(row.key)}
-                                    className="text-zinc-400 px-2"
                                     aria-label="Remove item"
+                                    className="w-11 h-11 flex items-center justify-center text-muted active:text-danger shrink-0"
                                 >
                                     ✕
                                 </button>
@@ -133,18 +133,22 @@ export default function EditListModal({
                         ))}
                     </div>
 
-                    <button type="button" onClick={addRow} className="text-sm text-blue-600 text-left">
+                    <button
+                        type="button"
+                        onClick={addRow}
+                        className="text-sm font-mono text-accent-hover text-left min-h-11 flex items-center px-1"
+                    >
                         + Add item
                     </button>
 
-                    {error && <p className="text-sm text-red-600">{error}</p>}
+                    {error && <p className="text-sm text-danger">{error}</p>}
 
                     <div className="flex items-center justify-between mt-2 gap-2">
                         {list ? (
                             <button
                                 type="button"
                                 onClick={handleDelete}
-                                className="text-sm text-red-600"
+                                className="text-sm text-danger min-h-11 px-2"
                                 disabled={saving}
                             >
                                 Delete list
@@ -156,7 +160,7 @@ export default function EditListModal({
                             <button
                                 type="submit"
                                 disabled={saving}
-                                className="px-4 py-2 rounded-lg bg-black text-white text-sm disabled:opacity-50"
+                                className="px-5 min-h-12 rounded-xl bg-accent text-white text-sm font-medium disabled:opacity-50 glow-accent"
                             >
                                 Save
                             </button>

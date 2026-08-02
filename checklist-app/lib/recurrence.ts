@@ -54,10 +54,6 @@ export function isScheduledToday(schedule: Schedule, today: string | Date): bool
     const interval = schedule.interval && schedule.interval > 0 ? schedule.interval : 1;
 
     switch (schedule.type) {
-        case 'once': {
-            return isSameDay(schedule.startDate, today);
-        }
-
         case 'today':
         case 'tomorrow': {
             // These are effectively one-off schedules anchored to startDate,

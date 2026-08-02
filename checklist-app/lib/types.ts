@@ -12,7 +12,7 @@ export type NewSchedule = typeof schedules.$inferInsert;
 export type ListCompletion = typeof listCompletions.$inferSelect;
 export type NewListCompletion = typeof listCompletions.$inferInsert;
 
-export type ScheduleType = 'once' | 'daily' | 'weekly' | 'monthly' | 'today' | 'tomorrow';
+export type ScheduleType = 'daily' | 'weekly' | 'monthly' | 'today' | 'tomorrow';
 
 // Input shape used when creating/updating a schedule from the UI.
 export interface ScheduleInput {

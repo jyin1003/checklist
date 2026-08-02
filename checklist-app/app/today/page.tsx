@@ -48,11 +48,13 @@ export default async function TodayPage() {
     const complete = lists.filter((l) => l.items.length > 0 && l.items.every((i) => i.checked));
 
     return (
-        <div className="flex-1 overflow-y-auto p-4 pb-24">
-            <h1 className="text-2xl font-semibold mb-4">Today</h1>
+        <div className="flex-1 overflow-y-auto p-4 pb-8">
+            <h1 className="text-2xl font-semibold mb-5 font-mono tracking-tight">
+                <span className="text-accent">...</span> Today
+            </h1>
 
             {lists.length === 0 ? (
-                <p className="text-zinc-500 mt-8 text-center">Nothing scheduled for today.</p>
+                <p className="text-muted mt-16 text-center text-sm font-mono">nothing scheduled for today</p>
             ) : (
                 <div className="flex flex-col gap-3">
                     {incomplete.map((list) => (

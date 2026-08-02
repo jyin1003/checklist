@@ -6,7 +6,6 @@ import type { Schedule, ScheduleType, ScheduleInput } from '@/lib/types';
 import { todayDateString } from '@/lib/recurrence';
 
 const TYPE_OPTIONS: { value: ScheduleType; label: string }[] = [
-    { value: 'once', label: 'Once' },
     { value: 'daily', label: 'Daily' },
     { value: 'weekly', label: 'Weekly' },
     { value: 'monthly', label: 'Monthly' },
@@ -15,13 +14,13 @@ const TYPE_OPTIONS: { value: ScheduleType; label: string }[] = [
 ];
 
 const WEEKDAYS = [
-    { value: 0, label: 'Sun' },
-    { value: 1, label: 'Mon' },
-    { value: 2, label: 'Tue' },
-    { value: 3, label: 'Wed' },
-    { value: 4, label: 'Thu' },
-    { value: 5, label: 'Fri' },
-    { value: 6, label: 'Sat' },
+    { value: 0, label: 'S' },
+    { value: 1, label: 'M' },
+    { value: 2, label: 'T' },
+    { value: 3, label: 'W' },
+    { value: 4, label: 'T' },
+    { value: 5, label: 'F' },
+    { value: 6, label: 'S' },
 ];
 
 export default function ScheduleModal({
@@ -80,8 +79,8 @@ export default function ScheduleModal({
     }
 
     return (
-        <div className="fixed inset-0 bg-black/40 flex items-end sm:items-center justify-center z-50">
-            <div className="bg-white rounded-t-2xl sm:rounded-2xl w-full sm:max-w-md p-5 max-h-[85vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center z-50">
+            <div className="bg-surface border border-border rounded-t-2xl sm:rounded-2xl w-full sm:max-w-md p-5 max-h-[85vh] overflow-y-auto">
                 <h2 className="text-lg font-semibold mb-4">Schedule</h2>
 
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -91,9 +90,9 @@ export default function ScheduleModal({
                                 key={opt.value}
                                 type="button"
                                 onClick={() => setType(opt.value)}
-                                className={`px-3 py-1.5 rounded-full text-sm border ${type === opt.value
-                                        ? 'bg-black text-white border-black'
-                                        : 'border-zinc-300 text-zinc-600'
+                                className={`px-4 min-h-11 rounded-full text-sm font-mono border transition-colors ${type === opt.value
+                                    ? 'bg-accent text-white border-accent'
+                                    : 'border-border text-muted active:bg-surface-2'
                                     }`}
                             >
                                 {opt.label}
@@ -101,20 +100,20 @@ export default function ScheduleModal({
                         ))}
                     </div>
 
-                    {(type === 'once' || type === 'daily' || type === 'weekly' || type === 'monthly') && (
-                        <label className="flex flex-col gap-1 text-sm">
-                            {type === 'once' ? 'Date' : 'Starting from'}
+                    {(type === 'daily' || type === 'weekly' || type === 'monthly') && (
+                        <label className="flex flex-col gap-1.5 text-sm text-muted">
+                            Starting from
                             <input
                                 type="date"
                                 value={startDate}
                                 onChange={(e) => setStartDate(e.target.value)}
-                                className="border border-zinc-300 rounded-lg px-3 py-2"
+                                className="bg-surface-2 border border-border rounded-xl px-4 py-3 text-[15px] text-foreground"
                             />
                         </label>
                     )}
 
                     {(type === 'daily' || type === 'weekly' || type === 'monthly') && (
-                        <label className="flex flex-col gap-1 text-sm">
+                        <label className="flex flex-col gap-1.5 text-sm text-muted">
                             Repeat every
                             <div className="flex items-center gap-2">
                                 <input
@@ -122,9 +121,9 @@ export default function ScheduleModal({
                                     min={1}
                                     value={interval}
                                     onChange={(e) => setIntervalValue(Math.max(1, Number(e.target.value)))}
-                                    className="w-20 border border-zinc-300 rounded-lg px-3 py-2"
+                                    className="w-20 bg-surface-2 border border-border rounded-xl px-4 py-3 text-[15px] text-foreground"
                                 />
-                                <span className="text-zinc-500">
+                                <span className="text-muted">
                                     {type === 'daily' && (interval === 1 ? 'day' : 'days')}
                                     {type === 'weekly' && (interval === 1 ? 'week' : 'weeks')}
                                     {type === 'monthly' && (interval === 1 ? 'month' : 'months')}
@@ -134,17 +133,17 @@ export default function ScheduleModal({
                     )}
 
                     {type === 'weekly' && (
-                        <div className="flex flex-col gap-1 text-sm">
+                        <div className="flex flex-col gap-1.5 text-sm text-muted">
                             On these days
                             <div className="flex flex-wrap gap-2">
-                                {WEEKDAYS.map((d) => (
+                                {WEEKDAYS.map((d, i) => (
                                     <button
-                                        key={d.value}
+                                        key={`${d.value}-${i}`}
                                         type="button"
                                         onClick={() => toggleWeekday(d.value)}
-                                        className={`px-2.5 py-1 rounded-full text-xs border ${daysOfWeek.includes(d.value)
-                                                ? 'bg-black text-white border-black'
-                                                : 'border-zinc-300 text-zinc-600'
+                                        className={`w-11 h-11 rounded-full text-sm font-mono border transition-colors ${daysOfWeek.includes(d.value)
+                                            ? 'bg-accent text-white border-accent'
+                                            : 'border-border text-muted active:bg-surface-2'
                                             }`}
                                     >
                                         {d.label}
@@ -155,7 +154,7 @@ export default function ScheduleModal({
                     )}
 
                     {type === 'monthly' && (
-                        <label className="flex flex-col gap-1 text-sm">
+                        <label className="flex flex-col gap-1.5 text-sm text-muted">
                             Day of month
                             <input
                                 type="number"
@@ -163,7 +162,7 @@ export default function ScheduleModal({
                                 max={31}
                                 value={dayOfMonth}
                                 onChange={(e) => setDayOfMonth(Math.min(31, Math.max(1, Number(e.target.value))))}
-                                className="w-20 border border-zinc-300 rounded-lg px-3 py-2"
+                                className="w-20 bg-surface-2 border border-border rounded-xl px-4 py-3 text-[15px] text-foreground"
                             />
                         </label>
                     )}
@@ -173,7 +172,7 @@ export default function ScheduleModal({
                             <button
                                 type="button"
                                 onClick={handleTurnOff}
-                                className="text-sm text-red-600"
+                                className="text-sm text-danger min-h-11 px-2"
                                 disabled={saving}
                             >
                                 Turn off
@@ -185,14 +184,14 @@ export default function ScheduleModal({
                             <button
                                 type="button"
                                 onClick={onClose}
-                                className="px-4 py-2 rounded-lg border border-zinc-300 text-sm"
+                                className="px-5 min-h-12 rounded-xl border border-border text-sm active:bg-surface-2"
                             >
                                 Cancel
                             </button>
                             <button
                                 type="submit"
                                 disabled={saving}
-                                className="px-4 py-2 rounded-lg bg-black text-white text-sm disabled:opacity-50"
+                                className="px-5 min-h-12 rounded-xl bg-accent text-white text-sm font-medium disabled:opacity-50 glow-accent"
                             >
                                 Save
                             </button>
